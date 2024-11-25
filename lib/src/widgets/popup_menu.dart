@@ -103,9 +103,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
   });
 
   @override
-  Duration get transitionDuration =>
-      menuModeProps.popUpAnimationStyle?.duration ??
-      Duration(milliseconds: 300);
+  Duration get transitionDuration => menuModeProps.popUpAnimationStyle?.duration ?? Duration(milliseconds: 300);
 
   @override
   bool get barrierDismissible => menuModeProps.barrierDismissible;
@@ -117,8 +115,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
   String? get barrierLabel => menuModeProps.barrierLabel;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     final PopupMenuThemeData popupMenuTheme = PopupMenuTheme.of(context);
     final menu = Material(
       surfaceTintColor: menuModeProps.surfaceTintColor,
@@ -128,8 +125,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
       elevation: menuModeProps.elevation ?? popupMenuTheme.elevation ?? 8.0,
       clipBehavior: menuModeProps.clipBehavior,
       borderRadius: menuModeProps.borderRadius,
-      animationDuration: menuModeProps.popUpAnimationStyle?.duration ??
-          Duration(milliseconds: 300),
+      animationDuration: menuModeProps.popUpAnimationStyle?.duration ?? Duration(milliseconds: 300),
       shadowColor: menuModeProps.shadowColor,
       borderOnForeground: menuModeProps.borderOnForeground,
       child: child,
@@ -149,7 +145,8 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
     }
 
     return CustomSingleChildLayout(
-      delegate: _PopupMenuRouteLayout(context, mediaQuery.padding, pos),
+      delegate: menuModeProps.delegate?.call(context, mediaQuery.padding, pos) ??
+          _PopupMenuRouteLayout(context, mediaQuery.padding, pos),
       child: capturedThemes.wrap(menu),
     );
   }

@@ -62,7 +62,8 @@ typedef FavoriteItemsBuilder<T> = Widget Function(
 typedef ValidationMultiSelectionBuilder<T> = Widget Function(
     BuildContext context, List<T> items);
 typedef PositionCallback = RelativeRect Function(
-    RenderBox dropdownBox, RenderBox overlay);
+    RenderBox dropdownBox, RenderBox overlay, BoxConstraints menuConstraints,
+    SingleChildLayoutDelegate Function(BuildContext context, EdgeInsets padding, RelativeRect position)? delegate);
 typedef OnItemAdded<T> = void Function(List<T> selectedItems, T addedItem);
 typedef OnItemRemoved<T> = void Function(List<T> selectedItems, T removedItem);
 typedef PopupBuilder<T> = Widget Function(
@@ -664,7 +665,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
       menuModeProps: widget.popupProps.menuProps,
       context: context,
       position: (widget.popupProps.menuProps.positionCallback ?? _position)(
-          dropdownObject, overlay),
+          dropdownObject, overlay, widget.popupProps.constraints, widget.popupProps.menuProps.delegate),
       child: _popupWidgetInstance(),
     );
   }
